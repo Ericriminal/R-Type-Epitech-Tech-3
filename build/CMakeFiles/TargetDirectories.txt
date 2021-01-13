@@ -1,0 +1,12 @@
+/home/teric/PROJECT/année_3/B-CPP-501-PAR-5-1-rtype-eric1.tran/build/CMakeFiles/rebuild_cache.dir
+/home/teric/PROJECT/année_3/B-CPP-501-PAR-5-1-rtype-eric1.tran/build/CMakeFiles/BackgroundPlanetRing.dir
+/home/teric/PROJECT/année_3/B-CPP-501-PAR-5-1-rtype-eric1.tran/build/CMakeFiles/BackgroundFarPlanet.dir
+/home/teric/PROJECT/année_3/B-CPP-501-PAR-5-1-rtype-eric1.tran/build/CMakeFiles/BackgroundBigPlanet.dir
+/home/teric/PROJECT/année_3/B-CPP-501-PAR-5-1-rtype-eric1.tran/build/CMakeFiles/r-type_client.dir
+/home/teric/PROJECT/année_3/B-CPP-501-PAR-5-1-rtype-eric1.tran/build/CMakeFiles/r-type_server.dir
+/home/teric/PROJECT/année_3/B-CPP-501-PAR-5-1-rtype-eric1.tran/build/CMakeFiles/BackgroundStars.dir
+/home/teric/PROJECT/année_3/B-CPP-501-PAR-5-1-rtype-eric1.tran/build/CMakeFiles/BackgroundSpace.dir
+/home/teric/PROJECT/année_3/B-CPP-501-PAR-5-1-rtype-eric1.tran/build/CMakeFiles/Player.dir
+/home/teric/PROJECT/année_3/B-CPP-501-PAR-5-1-rtype-eric1.tran/build/CMakeFiles/PlayerBis.dir
+/home/teric/PROJECT/année_3/B-CPP-501-PAR-5-1-rtype-eric1.tran/build/CMakeFiles/edit_cache.dir
+/home/teric/PROJECT/année_3/B-CPP-501-PAR-5-1-rtype-eric1.tran/build/CMakeFiles/Bullet.dir

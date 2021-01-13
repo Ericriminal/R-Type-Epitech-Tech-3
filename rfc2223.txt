@@ -1,0 +1,210 @@
+
+
+
+
+
+
+Epitech Paris                                                Y. Frederic
+Request for Comments: 2223                                       T. Eric
+Category: Standards Track                                     X. Clement
+                                                           November 2020
+                      R-Type UDP Protocol
+
+Status of this Memo
+
+   This document specifies the UDP Protocol for the project R-Type.
+   R-Type is a third year project from Epitech. Distribution of this
+   memo is unlimited.
+
+Table of Contents
+
+   1.   Introduction . . . . . . . . . . . . . . . . . . . . . . . . 2
+   2.   R-Type architecture . . . . . . . . . . . . . . . . . . . .  2
+   3.   R-Type UDP Protocol . . . . . . . . . . . . . . . . . . . .  3
+   3a.   Payload . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+   3b.   Server connection . . . . . . . . . . . . . . . . . . . . . 4
+   3c.   Game start: server . . . . . . . . . . . . . . . . . . . .  4
+   3d.   Game start: client . . . . . . . . . . . . . . . . . . . .  5
+   3e.   Game event . . . . . . . . . . . . . . . . . . . . . . . .  5
+   3f.   Game close . . . . . . . . . . . . . . . . . . . . . . . .  5
+
+
+
+
+
+Ye                           Standards Track                    [Page 1]
+
+RFC 2223                   R-Type UDP Protocol             November 2020
+
+
+1.  Introduction
+
+    This protocol is intended to provide information
+    about the UDP connection service for the R-Type project.
+    Who will be used between clients and servers on host computers.
+    Typically the clients and the servers are on fedora system.
+
+    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+    "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL"
+    in this document are to be interpreted as described in RFC 2119.
+
+2.  R-Type architecture
+
+    The architecture of R-Type is a client-server game architecture.
+    The game engine is in the server and the client.
+    A client connect to the server by using this protocol.
+    Server will create and launch a game when the first player joined.
+    Multiple clients can connect to the server.
+
+
+
+Ye                           Standards Track                    [Page 2]
+
+RFC 2223                   R-Type UDP Protocol             November 2020
+
+3.  R-Type UDP Protocol
+
+    All the client-server communications are done by using this R-Type
+    Protocol.
+
+    3a.  Payload
+
+        Every transmission done with the R-Type UDP Protocol MUST
+        transmit two payload:
+
+            First payload:
+                DataType ACTION;
+
+            Second payload:
+                char *BODY;
+
+        Where ACTIOn define the type of the body send and represente
+        the action to do with the second payload. The value of DATATYPE 
+        MUST BE in accordance with the enum DataStream::DataType
+        (described below).
+
+        THE DATATYPE enumeration:
+        
+            enum DataType {
+                CONNECTION,
+                POSITION,
+                DESTRUCTION,
+                CREATION,
+                PLAYERACTION,
+                PING,
+            };
+
+        To send the first payload, the first data MUST be written on
+        the UDP Socket.
+
+        To receive the first payload, you MUST read the 4 first bytes
+        (corresponding to the DataType data). It will define the type
+        of body you will receive.
+
+        Where BODY is the data to be processed.
+
+        To receive the second payload, you will need to read a size
+        equal to the structure you will receive, defined by the first
+        payload.
+
+
+
+Ye                           Standards Track                    [Page 3]
+
+RFC 2223                   R-Type UDP Protocol             November 2020
+
+    3b. Server connection
+
+        To connect to the server, the client MUST send to the server a
+        payload containing:
+
+            ACTION = DataType::CONNECTION
+            BODY = struct connection (define below)
+
+            struct connection {
+            int status;
+            char clientIp[20];
+            char port[10];
+            };
+
+        On success, the server MUST send to the client a response 
+        payload containing:
+
+            ACTION = DataType::PING
+            BODY = struct ping (define below)
+
+            struct ping
+            {
+            };
+        
+        On failure the client MUST send again a payload of connection.
+
+    3c. Game start: server
+
+        In order to start a game, a client MUST join the server.
+        It will make the server start automatically the game.
+        Server MUST send to player his playerID :
+
+            ACTION = DataType::CONNECTED
+            BODY = struct connected (define below)
+
+            struct connected {
+            int playerNum;
+            };
+
+
+
+Ye                           Standards Track                    [Page 4]
+
+RFC 2223                   R-Type UDP Protocol             November 2020
+
+        He MUST after, send all the component that the client will
+        need to create:
+
+            ACTION = DataType::CREATION
+            BODY = struct creation (define below)
+
+            struct creation
+            {
+            int id;
+            int entityToCreate;
+            float x;
+            float y;
+            };
+
+    3d. Game start: client
+
+        After the connection with the server done, client MUST
+        receive his ID and a list of Component to create.
+
+    3e. Game event
+
+        After the game start, client MUST send to server
+        every action he does, payload containing:
+
+            ACTION = DataType::PLAYERACTION
+            BODY = struct playerAction(describe below)
+
+            struct playerAction
+            {
+            int id;
+            int playerNum;
+            float speedX;
+            float speedY;
+            int action;
+            };
+
+        Where playerAction::action define the type of action
+        the payload contain. 0 means movement, 1 means shoot
+        and 2 means quit.
+
+    3f. Game close
+
+        Every client MUST send the action quit.
+        If server has no more client connected, 
+        then he will close the game.
+
+
+
+Ye                           Standards Track                    [Page 5]
+
